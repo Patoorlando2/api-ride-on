@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Http\Controllers\ProductoController;
 use App\Models\Producto;
 use App\Repositories\ProductoInterface;
 
@@ -16,7 +15,7 @@ class ProductoRepository implements ProductoInterface
         return Producto::find($id);
     }
 
-    public function createProductos(array $data){
+    public function createProductos($data){
         return Producto::create($data);
     }
 

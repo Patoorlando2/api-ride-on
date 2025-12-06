@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ProductoService;
 
 use Illuminate\Http\Request;
+use Throwable;
 
 class ProductoController extends Controller
 {
@@ -20,12 +21,32 @@ class ProductoController extends Controller
         // el controller solo interactua con el service
         $productos = $this->productoService->obtenerTodosLosProductos();
 
-        return $productos;
+       return response()->json([
+            "status" => 200,
+            "data" => $productos
+        ]);
     }
 
-    public function create(array $data)
-    {
-        return $this->productoService->crearNuevoProducto($data);
+    public function create(Request $request){
+        try {
+            $data = $request->all();
+            $result = $this->productoService->crearNuevoProducto($data);
+
+            return response()->json([
+                'status' => 200,
+                'message' => "Se ha creado con exito.",
+                "data" => $result
+            ]);
+
+        } catch (Throwable $e) {
+
+            return response()->json([
+                "status" => 500,
+                "message" => "Error: " . $e->getMessage(),
+                "line" => $e->getLine(),
+                "file" => $e->getFile()
+            ]);
+        }
     }
 
 
