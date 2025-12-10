@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ProductoService;
 
+use Exception;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -52,7 +53,28 @@ class ProductoController extends Controller
 
     public function show($id)
     {
-        
+        try {
+            $data = $this->productoService->obtenerProductoPorId($id);
+
+            if (!$data) {
+                return response()->json([
+                    "status" => 404,
+                    "message" => "Producto no encontrado"
+                ], 404);
+            }
+            
+            return response()->json([
+                "status" => 201,
+                "message" => "Producto mostrado correctamente",
+                "data" => $data
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => 500,
+                "message" => "Error al obtener el producto: " . $e->getMessage()
+            ], 500);
+        }   
     }
 
     /**

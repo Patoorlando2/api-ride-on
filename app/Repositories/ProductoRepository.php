@@ -8,7 +8,10 @@ use App\Repositories\ProductoInterface;
 class ProductoRepository implements ProductoInterface
 {
     public function getAllProductos(){
-        return Producto::all();
+        // return Producto::all();
+        // Carga los productos y, para cada producto, carga la relación 'imagen'
+        $productos = Producto::with('imagen', 'categoria')->get();
+        return $productos;
     }
 
     public function getProductosById($id){

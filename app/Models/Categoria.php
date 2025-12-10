@@ -9,6 +9,7 @@ class Categoria extends Model
     protected $table = 'categorias';
     protected $fillable = ['categoria'];
 
+    protected $primaryKey = 'id_categoria';
 
     public function productos (){
 
