@@ -6,6 +6,7 @@ use App\Services\ProductoService;
 
 use Exception;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 use Throwable;
 
 class ProductoController extends Controller
@@ -20,12 +21,18 @@ class ProductoController extends Controller
     public function index()
     {
         // el controller solo interactua con el service
-        $productos = $this->productoService->obtenerTodosLosProductos();
-
-       return response()->json([
-            "status" => 200,
-            "data" => $productos
-        ]);
+        try {
+            $productos = $this->productoService->obtenerTodosLosProductos();
+            return response()->json([
+                'status' => 200,
+                'data' => $productos
+            ], 200);
+        } catch (Throwable $th) {
+            return response()->json([
+                'status' => 404,
+                'message' => $th->getMessage()
+            ], 200);
+        }
     }
 
     public function create(Request $request){

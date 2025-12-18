@@ -24,7 +24,6 @@ class Imagen extends Model
     
     public function getUrlCompletaAttribute()
     {
-        // 🚨 IMPORTANTE: Usa la variable de entorno o la URL fija de tu API
         $baseUrl = 'http://127.0.0.1:8000/'; 
         
         // Combina la URL base con el valor de la columna (ej. 'imagenes/filename.jpg')

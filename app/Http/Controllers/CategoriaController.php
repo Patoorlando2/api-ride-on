@@ -2,64 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categoria;
+use App\Services\CategoriaService;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+{   
+    protected $categoriaService;
+
+    public function __construct(CategoriaService $categoriaService)
     {
-        //
+        $this->categoriaService = $categoriaService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    public function obtenerCategoriasPorTipo($tipo){
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Categoria $categoria)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Categoria $categoria)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Categoria $categoria)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Categoria $categoria)
-    {
-        //
+        try {
+            $categorias = $this->categoriaService->obtenerCategoriaPorTipo($tipo);
+            return response()->json([
+                'data' => $categorias,
+                "status" => 200,
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 404);
+        }
     }
 }

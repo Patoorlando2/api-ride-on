@@ -8,7 +8,6 @@ use App\Repositories\ProductoInterface;
 class ProductoRepository implements ProductoInterface
 {
     public function getAllProductos(){
-        // return Producto::all();
         // Carga los productos y, para cada producto, carga la relación 'imagen'
         $productos = Producto::with('imagen', 'categoria')->get();
         return $productos;
@@ -34,8 +33,6 @@ class ProductoRepository implements ProductoInterface
     public function deleteProductos($id){
         return Producto::destroy($id);
     }
-
-
 }
 
 

@@ -7,59 +7,33 @@ use Illuminate\Http\Request;
 
 class AccesorioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+   
+    public function index(){
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        try {
+            $accesorios = Accesorio::with('imagen', 'categoria')->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            if ($accesorios->isEmpty()) {
+                return response()->json([
+                    'status' => 200,
+                    'data' => [],
+                    'message' => 'No se han encontrado accesorios.'
+                ], 200);
+            }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Accesorio $accesorio)
-    {
-        //
-    }
+            return response()->json([
+                'status' => 200,
+                'data' => $accesorios,
+                'message' => 'Se han encontrado los datos exitosamente'
+            ], 200);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Accesorio $accesorio)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Accesorio $accesorio)
-    {
-        //
-    }
+        } catch (\Throwable $th) {
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Accesorio $accesorio)
-    {
-        //
+            return response()->json([
+                'status' => 500,
+                'message' => 'Ha habido error del servidor'
+            ], 500);
+        }
     }
 }
