@@ -33,5 +33,6 @@ Route::controller(AccesorioController::class)->group(function () {
 Route::controller(CategoriaController::class)->group(function() {
 
     Route::get('/categorias/tipo/{tipo}', 'obtenerCategoriasPorTipo');
+    Route::get('/categorias', 'obtenerCategorias');
 });
 

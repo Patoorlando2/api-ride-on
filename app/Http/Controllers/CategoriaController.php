@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Services\CategoriaService;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,8 @@ class CategoriaController extends Controller
         try {
             $categorias = $this->categoriaService->obtenerCategoriaPorTipo($tipo);
             return response()->json([
+                'status' => 200,
                 'data' => $categorias,
-                "status" => 200,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -28,4 +29,10 @@ class CategoriaController extends Controller
             ], 404);
         }
     }
+
+    public function obtenerCategorias(){
+
+        return Categoria::all();
+    }
+
 }
